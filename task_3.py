@@ -32,6 +32,20 @@ import re
 
 
 def format_phone_number(text):
-    # ваше решение:
+
+    symbols = ''.join(re.findall(r"[^\d]", text))
+    symbols = ''.join(re.findall(r"[^\\\(\\\)]", symbols))
+    symbols = ''.join(re.findall(r"[^\s]", symbols))
+    if(len(re.findall(r"[^+-]", symbols))) == 0:
+        digits = ''.join(re.findall(r"(\d)", text))
+        number = ""
+        if (len(digits) == 10 or (len(digits) == 11)):
+            if(len(digits) == 10):
+                number = f"+7 {digits[:3]} {digits[3:6]}-{digits[6:8]}-{digits[8:]}"
+                return number
+            if(len(digits) == 11):
+                if(digits[0]=='7' or digits[0]=='8'):
+                    number = f"+7 {digits[1:4]} {digits[4:7]}-{digits[7:9]}-{digits[9:]}"
+                    return number
 
     return "Fail!"
